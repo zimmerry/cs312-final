@@ -3,15 +3,15 @@ Auto-provisioning Minecraft Server on AWS
 
 This repo contains [Terraform](https://developer.hashicorp.com/terraform/downloads?product_intent=terraform) specifications and and an [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible) playbook that automatically provision an AWS ec2 instance, configure the instance, and start a Minecraft server using a Docker container
 
-## Using these scripts
+## Requirements
 ### Prerequisites
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible)
 - [Terraform CLI](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 - [AWS](https://aws.amazon.com/) account
-- Clone this repository
+- Clone this repository:
 ```
-git clone 
+git clone git@github.com:zimmerry/cs312-final.git
 cd cs312-final
 ```
 
@@ -30,4 +30,46 @@ aws_access_key_id=ACCESSKEYFROMCONSOLE
 aws_secret_access_key=SECRETACCESSFROMCONSOLE
 ```
 
-### Creating an 
+### Creating an SSH Key pair
+You will need an SSH key pair for Ansible to use to access the instance.
+
+- If you don't know how to create an SSH key pair, you can follow [this guide from GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
+- The public key should be named `aws-ansible.pub` and the private key should be named `aws-ansible`
+- Add the public and private key to the root directory of your cloned version of this repository
+  - After adding the key pair, the repo should look like this:
+
+```
+├── ansible/
+├── aws-ansible
+├── aws-ansible.pub
+├── minecraft.sh
+├── README.md
+├── terraform/
+└── tf-output
+```
+
+## Running the scripts
+
+To provision and start the server, run:
+```
+./minecraft.sh start
+```
+This command runs `terraform apply` which:
+- Creates the VPC
+- Creates the security group with port 22 (SSH) and 25565 (Minecraft) open
+- Creates the ec2 instance running debian
+- Creates an Ansible inventory file at `tf-output/ansible-inventory` using the information of the newly-created instance
+
+Next it runs `ansible-playbook -i tf-output/ansible-inventory ansible/playbook.yml` which:
+- Connects to the ec2 instance via SSH
+- Installs Docker and all its dependencies
+- Sets up Docker to start at boot
+- Sets up a single-node Docker Swarm
+- Deploys the Minecraft server
+
+To stop the server and destroy all the resources, run:
+```
+./minecraft.sh stop
+```
+
+This command runs `terraform destroy` which removes all of the resources created by `terraform apply`
