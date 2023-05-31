@@ -8,3 +8,5 @@ This repo contains [Terraform](https://developer.hashicorp.com/terraform/downloa
 - [Terraform CLI](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 - [AWS](https://aws.amazon.com/) account
+
+## Generating AWS credentials
