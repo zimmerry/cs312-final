@@ -1,7 +1,10 @@
 # cs312-final
 Auto-provisioning Minecraft Server on AWS
 
-This repo contains [Terraform](https://developer.hashicorp.com/terraform/downloads?product_intent=terraform) specifications and and an [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible) playbook that automatically provision an AWS ec2 instance, configure the instance, and start a Minecraft server using a Docker container
+This repo contains [Terraform](https://developer.hashicorp.com/terraform/downloads?product_intent=terraform) specifications and and an [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html#installing-and-upgrading-ansible) playbook that automatically provision an AWS EC2 instance, configure the instance, and start a Minecraft server using a Docker container
+
+### Overview
+![Untitled drawing](https://github.com/zimmerry/cs312-final/assets/53264075/3f116082-d4f7-4d40-901f-2a8963885b97)
 
 ## Requirements
 ### Prerequisites
@@ -57,11 +60,11 @@ To provision and start the server, run:
 This command runs `terraform apply` which:
 - Creates the VPC
 - Creates the security group with port 22 (SSH) and 25565 (Minecraft) open
-- Creates the ec2 instance running debian
+- Creates the EC2 instance running debian
 - Creates an Ansible inventory file at `tf-output/ansible-inventory` using the information of the newly-created instance
 
 Next it runs `ansible-playbook ansible/playbook.yml` which:
-- Connects to the ec2 instance via SSH
+- Connects to the EC2 instance via SSH
 - Installs Docker and all its dependencies
 - Sets up Docker to start at boot
 - Sets up a single-node Docker Swarm
