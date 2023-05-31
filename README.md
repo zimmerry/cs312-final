@@ -76,3 +76,14 @@ To stop the server and destroy all the resources, run:
 ```
 
 This command runs `terraform destroy` which removes all of the resources created by `terraform apply`
+
+## Connecting to the server
+
+After Ansible finishes, it will display a play recap that looks something like this:
+```
+PLAY RECAP ************************************************************
+ec2-123-456-78-90.us-west-2.compute.amazonaws.com : ok=14   changed=9
+```
+Copy that EC2 URL and paste it into your Minecraft client (sometimes you have to wait a minute or two for the server to finish setting up)
+
+Success!
