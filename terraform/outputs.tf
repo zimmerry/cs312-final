@@ -8,6 +8,10 @@ output "cs312_final_dns" {
   value = aws_instance.cs312_final.public_dns
 }
 
+output "private_ssh_key_file" {
+  value = "${path.cwd}/aws-ansible"
+}
+
 # process Ansible inventory template
 data "template_file" "ansible_inventory" {
   template = file("ansible_inventory.tpl")
@@ -15,6 +19,7 @@ data "template_file" "ansible_inventory" {
     cs312_final-dns = aws_instance.cs312_final.public_dns
     cs312_final-ip = aws_instance.cs312_final.public_ip
     ssh_user = var.ssh_user_name
+    private_ssh_key_file = "${path.cwd}/aws-ansible"
   }
 }
 
