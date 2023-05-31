@@ -1,0 +1,6 @@
+---
+- name: Install and configure Docker Engine
+  ansible.builtin.import_tasks: install-docker.yml
+
+- name: Start swarm mode
+  ansible.builtin.import_tasks: init-swarm-mode.yml

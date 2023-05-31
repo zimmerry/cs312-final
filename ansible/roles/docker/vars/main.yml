@@ -1,0 +1,19 @@
+---
+docker_dependencies:
+  - ca-certificates
+  - curl
+  - gnupg
+  - python3
+  - python3-pip
+
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-buildx-plugin
+  - docker-compose-plugin
+
+pip_packages:
+  - docker
+  - jsondiff
+  - pyyaml

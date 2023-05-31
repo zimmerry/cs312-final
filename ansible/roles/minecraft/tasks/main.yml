@@ -1,0 +1,21 @@
+---
+- name: Create and start Minecraft container
+  community.docker.docker_stack:
+    name: minecraft
+    state: present
+    compose:
+      - services:
+          minecraft:
+            image: itzg/minecraft-server
+            container_name: minecraft
+            environment:
+              EULA: "TRUE"
+            tty: true
+            stdin_open: true
+            volumes:
+              - minecraft_data:/data
+            ports:
+              - 25565:25565
+            restart: always
+        volumes:
+          minecraft_data:

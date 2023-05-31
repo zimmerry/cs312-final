@@ -1,0 +1,12 @@
+---
+- name: Remove old gpg key
+  ansible.builtin.file:
+    path: /etc/apt/keyrings/docker.gpg
+    state: absent
+  listen: "dearmor gpg key"
+
+- name: De-armor new gpg key
+  ansible.builtin.command: sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg /home/{{ ansible_user }}/.docker.gpg
+  listen: "dearmor gpg key"
+  register: dearmor_output
+  changed_when: dearmor_output.rc != 0

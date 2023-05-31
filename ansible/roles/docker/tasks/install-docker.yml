@@ -1,0 +1,53 @@
+---
+- name: Install docker dependencies
+  ansible.builtin.package:
+    name: "{{ docker_dependencies }}"
+    update_cache: true
+
+- name: Create keyring directory
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    mode: '0755'
+    state: directory
+
+- name: Get docker apt gpg key
+  ansible.builtin.get_url:
+    url: https://download.docker.com/linux/debian/gpg
+    dest: /home/{{ ansible_user }}/.docker.gpg
+    mode: '0644'
+  notify: "dearmor gpg key"
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Setup docker apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian bullseye stable"
+    state: present
+
+- name: Update and install docker packages
+  ansible.builtin.package:
+    update_cache: true
+    name: "{{ docker_packages }}"
+
+- name: Create docker group
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    groups: docker
+    append: true
+
+- name: Enable dockerd service
+  ansible.builtin.service:
+    name: docker
+    enabled: true
+    state: started
+
+- name: Install docker pip modules
+  ansible.builtin.pip:
+    name: "{{ pip_packages }}"
+    state: present

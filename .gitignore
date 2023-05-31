@@ -32,3 +32,9 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+tf-output/
+.vscode/
+aws-ansible*
+terraform/.terraform.lock.hcl
+terraform/terraform.env

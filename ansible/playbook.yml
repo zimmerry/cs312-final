@@ -1,0 +1,11 @@
+---
+- name: Setup Minecraft Server
+  hosts: minecraft
+  gather_facts: true
+  become: true
+  vars:
+    ansible_ssh_host_key_checking: false
+
+  roles:
+    - docker
+    - minecraft
