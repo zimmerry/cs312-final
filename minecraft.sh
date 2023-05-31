@@ -13,22 +13,20 @@ fi
 while [[ $# -gt 0 ]]; do
   case $1 in
     start)
-      # Execute command for argument A
       echo "Provisioning server on ec2"
       terraform -chdir=terraform init
-      echo "terraform -chdir=terraform apply -auto-approve"
+      echo "terraform apply -auto-approve"
       terraform -chdir=terraform apply -auto-approve
+      sleep 90 # Sleep for 90 seconds to give the instance time to provision
+      echo ""
       echo "ansible-playbook -i tf-output/ansible_inventory ansible/playbook.yml"
       ansible-playbook -i tf-output/ansible_inventory ansible/playbook.yml
-      # Insert your command for Argument A here
       ;;
     stop)
-      # Execute command for argument B
       echo "Stopping server and removing resources"
       terraform -chdir=terraform init
-      echo "terraform -chdir=terraform destroy -auto-approve"
+      echo "terraform destroy -auto-approve"
       terraform -chdir=terraform destroy -auto-approve
-      # Insert your command for Argument B here
       ;;
     *)
       echo "Unknown argument: $1"
