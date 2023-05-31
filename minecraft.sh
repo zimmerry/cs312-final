@@ -15,6 +15,7 @@ while [[ $# -gt 0 ]]; do
     start)
       # Execute command for argument A
       echo "Provisioning server on ec2"
+      terraform -chdir=terraform init
       echo "terraform -chdir=terraform apply -auto-approve"
       terraform -chdir=terraform apply -auto-approve
       echo "ansible-playbook -i tf-output/ansible_inventory ansible/playbook.yml"
@@ -24,6 +25,7 @@ while [[ $# -gt 0 ]]; do
     stop)
       # Execute command for argument B
       echo "Stopping server and removing resources"
+      terraform -chdir=terraform init
       echo "terraform -chdir=terraform destroy -auto-approve"
       terraform -chdir=terraform destroy -auto-approve
       # Insert your command for Argument B here
