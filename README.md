@@ -60,7 +60,7 @@ This command runs `terraform apply` which:
 - Creates the ec2 instance running debian
 - Creates an Ansible inventory file at `tf-output/ansible-inventory` using the information of the newly-created instance
 
-Next it runs `ansible-playbook -i tf-output/ansible-inventory ansible/playbook.yml` which:
+Next it runs `ansible-playbook ansible/playbook.yml` which:
 - Connects to the ec2 instance via SSH
 - Installs Docker and all its dependencies
 - Sets up Docker to start at boot
