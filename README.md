@@ -58,9 +58,9 @@ To provision and start the server, run:
 ./minecraft.sh start
 ```
 This command runs `terraform apply` which:
-- Creates the VPC
-- Creates the security group with port 22 (SSH) and 25565 (Minecraft) open
-- Creates the EC2 instance running debian
+- Creates an AWS VPC
+- Creates a security group with port 22 (SSH) and 25565 (Minecraft) open
+- Creates an EC2 instance running debian and applies the security group
 - Creates an Ansible inventory file at `tf-output/ansible-inventory` using the information of the newly-created instance
 
 Next it runs `ansible-playbook ansible/playbook.yml` which:
